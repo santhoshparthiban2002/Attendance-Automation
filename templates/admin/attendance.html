@@ -1,10 +1,128 @@
 {% extends 'admin/master.html' %}     
 {% load static %} 
-
-
+{% load poll_extras %}
+{% if user.is_authenticated %}
 {% block master %}
+<div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+        <div class="container-fluid">
+            <h3 class="text-dark mb-4"><strong><span style="color: rgb(78, 115, 223);">Student Attendance Database</span></strong></h3>
+            <div class="card shadow" id="filters" style="margin-top: 20px;">
+                <div class="card-body">
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4">
+                        <div class="col d-flex justify-content-center" style="margin-top: 10px;width: 100%;"><strong>Filters</strong></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4" style="margin-top: 20px;">
+                        <div class="col" style="margin-top: 10px;"><strong>Batch</strong></div>
+                        <div class="col" style="margin-top: 10px;"><select style="width: 100%;" class="form-select">
+                                <optgroup label="This is a group">
+                                    <option value="12" selected="">This is item 1</option>
+                                    <option value="13">This is item 2</option>
+                                    <option value="14">This is item 3</option>
+                                </optgroup>
+                            </select></div>
+                        <div class="col" style="margin-top: 10px;"><strong>Degree</strong></div>
+                        <div class="col" style="margin-top: 10px;"><select style="width: 100%;" class="form-select">
+                                <optgroup label="This is a group">
+                                    <option value="12" selected="">This is item 1</option>
+                                    <option value="13">This is item 2</option>
+                                    <option value="14">This is item 3</option>
+                                </optgroup>
+                            </select></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4">
+                        <div class="col" style="margin-top: 10px;"><strong>Department</strong></div>
+                        <div class="col" style="margin-top: 10px;"><select style="width: 100%;" class="form-select">
+                                <optgroup label="This is a group">
+                                    <option value="12" selected="">This is item 1</option>
+                                    <option value="13">This is item 2</option>
+                                    <option value="14">This is item 3</option>
+                                </optgroup>
+                            </select></div>
+                        <div class="col" style="margin-top: 10px;"><strong>Year</strong></div>
+                        <div class="col" style="margin-top: 10px;"><select style="width: 100%;" class="form-select">
+                                <optgroup label="This is a group">
+                                    <option value="12" selected="">This is item 1</option>
+                                    <option value="13">This is item 2</option>
+                                    <option value="14">This is item 3</option>
+                                </optgroup>
+                            </select></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4">
+                        <div class="col" style="margin-top: 10px;"><strong>Date</strong></div>
+                        <div class="col" style="margin-top: 10px;"><select style="width: 100%;" class="form-select">
+                                <optgroup label="This is a group">
+                                    <option value="12" selected="">This is item 1</option>
+                                    <option value="13">This is item 2</option>
+                                    <option value="14">This is item 3</option>
+                                </optgroup>
+                            </select></div>
+                        <div class="col" style="margin-top: 10px;"><strong></strong></div>
+                        <div class="col d-flex justify-content-end align-content-center" style="margin-top: 10px;"><button class="btn btn-primary" type="button">Button</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow" id="student_database" style="margin-top: 20px;">
+                <div class="card-body">
+                    <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
+                        <table class="table my-0 table-hover" id="dataTable4">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 150px;">Name</th>
+                                    <th style="min-width: 150px;">Register Number</th>
+                                    <th style="min-width: 100px;">Date</th>
+                                    <th style="min-width: 200px;">Study</th>
+                                    <th style="min-width: 100px;">Time</th>
+                                    <th style="min-width: 100px;">Attendance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                       
+                                    {% for attendance in attendances %}
+                                   
+                            <tr class="clickable-row" data-href="https://github.com/chatify-SMIT/ComputeX-WordMate/blob/master/word-mate/static/script.js" style="cursor: pointer;">
+                             {% studentdata attendance.user as data %}
+                                               <td>{{data.name}}</td>
+                                               <td>{{data.roll}}</td>
+                                      <td>{{attendance.date}}</td>
+                                      <td> {{data.degree}}-{{data.branch}}-{{data.batch}}</td>
+                                   
+                                  
+                                      
+                                      <td>{{ attendance.date }}</td>
+                                      <td>{{ attendance.status }}</td>
+                                    </tr>
+                                    {% endfor %}
+                               
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Register Number</td>
+                                    <td><strong>Date</strong></td>
+                                    <td>Study</td>
+                                    <td>Time</td>
+                                    <td>Attendence</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="{% static 'js/datatable.js' %}"></script>
+<script src="{% static 'js/bootdatatable.js' %}"></script>
 <script>
     document.getElementById("a5").classList.add("active");
     document.getElementById("a5").classList.add("actives");
+    $(document).ready(function () {
+        $('#dataTable4').DataTable();
+      });
 </script>
 {% endblock master %}
+{% endif %}

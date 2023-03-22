@@ -6,12 +6,13 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import*
 from django.http import HttpResponse
 from .models import *
+from course.models import *
+from attendence.models import *
 # Create your views here.
 @login_required
 def home(request):
-    if request.user.is_employee:
+    if request.user.is_employee: 
         return HttpResponse("staff")
-
 
 def logout(request):
     auth.logout(request)
@@ -67,11 +68,17 @@ def admins_register(request):
 
 @user_passes_test(staff_text)
 def admins_attendance(request):
-    return render(request, 'admin/attendance.html') 
+    attendances=attendence_1_year.objects.all()
+    students=student.objects.all()
+    courses=course_period.objects.all()
+    return render(request, 'admin/attendance.html',{"attendances":attendances}) 
 
 @user_passes_test(staff_text)
 def admins_database(request):
-    return render(request, 'admin/database.html') 
+    employees=employee.objects.all()
+    students=student.objects.all()
+    courses = course_period.objects.all()
+    return render(request, 'admin/database.html',{"employees":employees,"students":students,"courses":courses}) 
 
 
 def student_text(user):

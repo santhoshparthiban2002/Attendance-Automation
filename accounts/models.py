@@ -63,7 +63,7 @@ class student(models.Model):
     parent_mobile=models.BigIntegerField(null=True)
     email=models.EmailField(max_length=100,null=True)
     def __str__(self):
-        return f'{self.name} - {self.roll}'
+        return f'{self.roll}'
     
 @receiver(post_delete, sender=student)
 def auto_delete_employee_photo_on_delete(sender, instance, **kwargs):

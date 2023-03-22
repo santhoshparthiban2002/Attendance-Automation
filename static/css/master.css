@@ -1,6 +1,14 @@
 .hovers:active{
-    background-color: #46546c;
+    background-color: #303c54;
 }
 .actives{
     background:#46546c;
+}
+
+.bgcolor{
+    background: #303c54;
+}
+
+.textcolors{
+    color:#0050fe;
 }
