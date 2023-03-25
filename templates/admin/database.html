@@ -1,0 +1,199 @@
+{% extends 'admin/master.html' %}     
+{% load static %} 
+{% if user.is_authenticated %}
+{% block master %}
+<div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+
+        <div class="container-fluid">
+            <h3 class="text-dark"><strong><span style="color: #303c54;">Database</span></strong></h3>
+            <div class="card shadow">
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3" style="min-height: 50px;background: #ffffff">
+                    <div class="col d-flex justify-content-center align-items-center bgcolor" id="studentclick" style="cursor: pointer;">
+                        <p class=" m-0 fw-bold text-gray-dark text-white" id="studentclickp">Student Database</p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center" id="teacherclick" style="cursor: pointer;">
+                        <p class=" m-0 fw-bold text-gray-dark" id="teacherclickp">Teacher Database</p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center" id="courseclick" style="cursor: pointer;">
+                        <p class="m-0 fw-bold text-gray-dark" id="courseclickp">Course Database</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <div class="card shadow my-3" id="student_database">
+                <div class="card-header py-3" style="background: rgb(248, 249, 252);">
+                    <p class="text-primary m-0 fw-bold">Student Database</p>
+                </div>
+                <div class="card-body ">
+            
+                    <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
+                        <table class="table my-0 table-hover" id="dataTable1">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 150px;">Name</th>
+                                    <th style="min-width: 150px;">Register Number</th>
+                                    <th style="min-width: 100px;">Batch</th>
+                                    <th style="min-width: 100px;">Year</th>
+                                    <th style="min-width: 100px;">Degree</th>
+                                    <th style="min-width: 100px;">Branch</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr class="clickable-row" data-href="https://github.com/chatify-SMIT/ComputeX-WordMate/blob/master/word-mate/static/script.js" style="cursor: pointer;">
+                                  <td>{{ student.name }}</td>
+                                  <td>{{ student.roll }}</td>
+                                  <td>{{ student.batch }}</td>
+                                  <td>{{ student.year }}</td>
+                                  <td>{{ student.degree }}</td>
+                                  <td>{{ student.branch }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Register Number</td>
+                                    <td>Batch</td>
+                                    <td>Year</td>
+                                    <td>Degree</td>
+                                    <td>Branch</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+    
+                </div>
+            </div>
+
+
+            <div class="card shadow d-none" id="teacher_database" style="margin-top: 20px;color: rgb(133, 135, 150);">
+                <div class="card-header py-3" style="background: rgb(248, 249, 252);">
+                    <p class="text-primary m-0 fw-bold">Teacher Database</p>
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <table class="table my-0 table-hover" id="dataTable2">
+                            <thead>
+                                <tr class="clickable-row" data-href="https://github.com/chatify-SMIT/ComputeX-WordMate/blob/master/word-mate/static/script.js" style="cursor: pointer;">
+                                    <th style="min-width: 150px;">Name</th>
+                                    <th style="min-width: 150px;">Register Number</th>
+                                    <th style="min-width: 100px;">Department</th>
+                                    <th style="min-width: 100px;">Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for employee in employees %}
+                                <tr>
+                                    <td>{{employee.name}}</td>
+                                    <td>{{employee.roll}}</td>
+                                    <td>{{employee.department}}</td>
+                                    <td>{{employee.mobile}}</td>
+                              
+                                </tr>{% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td style="min-width: 150px;">Name</td>
+                                    <td style="min-width: 150px;">Register Number</td>
+                                    <td style="min-width: 100px;">Department</td>
+                                    <td style="min-width: 100px;">Contact</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card shadow d-none" id="course_database" style="margin-top: 20px;">
+                <div class="card-header py-3" style="background: rgb(248, 249, 252);">
+                    <p class="text-primary m-0 fw-bold">Course Database</p>
+                </div>
+                <div class="card-body">
+      
+                    <div class="table-responsive table mt-2" id="dataTable-2" role="grid" aria-describedby="dataTable_info">
+                        <table class="table my-0 table-hover" id="dataTable3">
+                            <thead>
+                                <tr class="clickable-row" data-href="https://github.com/chatify-SMIT/ComputeX-WordMate/blob/master/word-mate/static/script.js" style="cursor: pointer;">
+                                    <th style="min-width: 150px;">Batch</th>
+                                    <th style="min-width: 100px;">Degree</th>
+                                    <th style="min-width: 100px;">Year</th>
+                                    <th style="min-width: 100px;">Semester</th>
+                                    <th style="min-width: 100px;">Start</th>
+                                    <th style="min-width: 100px;">End</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for course in courses %}
+                                <tr>
+                                    <td>{{course.batch}}</td>
+                                    <td>{{course.degree}}</td>
+                                    <td>{{course.year}}</td>
+                                    <td>{{course.semester}}</td>
+                                    <td>{{course.start}}</td>
+                                    <td>{{course.end}}</td>
+                              
+                                </tr>{% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td style="min-width: 150px;">Batch</td>
+                                    <td style="min-width: 100px;">Degree</td>
+                                    <td style="min-width: 100px;">Year</td>
+                                    <td style="min-width: 100px;">Semester</td>
+                                    <td style="min-width: 100px;">Start</td>
+                                    <td style="min-width: 100px;">End</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+            
+                </div>
+            </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="{% static 'js/datatable.js' %}"></script>
+<script src="{% static 'js/bootdatatable.js' %}"></script>
+<script src="{% static 'js/database.js' %}"></script>
+
+{% endblock master %}
+{% endif %} 

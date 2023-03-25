@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Attendence Portal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="{% static 'images/logo.png'  %}" type="image/x-icon">
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        } 
+
+    </script>
+    <style>
+        #myAlert {
+            top:0;
+            width:80%;
+          z-index: 1000;
+        }
+      </style>
+  
+
+</head>
+<body >
+    <div class="container-sm py-4 py-xl-5" style="background: var(--bs-body-bg);border-radius: 50px;border-color: var(--bs-blue);">
+        <div class="row mb-5" >
+            <div class="col-md-8 col-xl-6 text-center mx-auto"><img src="{% static  'images/logo.png'  %}" width="124" height="107">
+                <h2>SRI MUTHUKUMARAN INSTITUTE OF TECHNOLOGY</h2>
+                <p>(Approved By AICTE Affiliated to Anna University)</p>
+            </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3 d-xl-flex justify-content-xl-center">
+            <div class="col" style="margin-bottom: 10px;">
+                <form  method="post" enctype="multipart/form-data" autocomplete="nope">
+                    {% csrf_token %}
+                <div class="text-center d-flex flex-column align-items-center align-items-xl-center">
+                    <div class="px-3">
+                        <h4>STAFF LOGIN</h4>
+                    </div>
+                </div>
+                <div class="d-lg-flex justify-content-lg-center input-group mb-3" style="margin-top: 10px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="background: var(--bs-blue);border-radius: 0px;width: 50px;">
+                            <i class="fa fa-user-circle text-light" style="font-size: 24px;"></i></span></div>
+                            <input type="text" name="staff_username"  class="form-control" style="margin-left:4px;width: 82%;">
+                </div>
+                <div class="d-lg-flex justify-content-lg-center input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="background: var(--bs-blue);border-radius: 0px;width: 50px;">
+                            <i class="fas fa-lock text-light" style="font-size: 24px;"></i></span></div>
+                            <input type="text" name="staff_password" class="form-control" style="margin-left: 4px;width: 82%;">
+                </div>
+                <div class="d-flex d-xxl-flex justify-content-center align-items-center justify-content-sm-start align-items-sm-center justify-content-xxl-end" style="width: 100%;">
+                    <a class="text-start d-lg-flex justify-content-lg-start justify-content-xl-start justify-content-xxl-start align-items-xxl-center" href="#" style="width: 75%;">
+                        <strong class="float-start">Forgot Password ?</strong></a>
+                        <input class="btn btn-primary align-items-end align-items-xxl-end" value="Log In" name="staff_submit" type="submit" style="width: 80px;"></input></div>
+
+
+
+
+            </div></form>
+            <div class="col" style="margin-bottom: 10px;">
+                <form  method="post" enctype="multipart/form-data" autocomplete="nope">
+                    {% csrf_token %}
+                <div class="text-center d-flex flex-column align-items-center align-items-xl-center">
+                    <div class="px-3">
+                        <h4>STUDENT LOGIN</h4>
+                    </div>
+                </div>
+                <div class="d-lg-flex justify-content-lg-center input-group mb-3" style="margin-top: 10px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="background: var(--bs-blue);border-radius: 0px;width: 50px;">
+                            <i class="fa fa-user-circle text-light" style="font-size: 24px;"></i></span></div>
+                            <input type="text"name="student_username" class="form-control" style="margin-left: 4px;width: 82%;">
+                </div>
+                <div class="d-lg-flex justify-content-lg-center input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="background: var(--bs-blue);border-radius: 0px;width: 50px;">
+                            <i class="fas fa-lock text-light" style="font-size: 24px;"></i></span></div>
+                            <input type="text" name="student_password" class="form-control" style="margin-left: 4px;width: 82%;">
+                </div>
+                <div class="d-flex d-xxl-flex justify-content-center align-items-center justify-content-sm-start align-items-sm-center justify-content-xxl-end" style="width: 100%;"><a class="text-start d-lg-flex justify-content-lg-start justify-content-xl-start justify-content-xxl-start align-items-xxl-center" href="#" style="width: 75%;">
+                    <strong class="float-start">Forgot Password ?</strong></a>
+                    <input class="btn btn-primary align-items-end align-items-xxl-end" type="submit" value="Log In" name="student_submit" style="width: 80px;"></div>
+            </div></form>
+        </div>
+     
+           {% if messages %}
+             <div class="alert alert-danger fade show position-fixed " role="alert" id="myAlert">
+             
+                  {% for message in messages %}
+               
+                    <strong>{{ message }}</strong>
+        
+                  {% endfor %}
+              </div>  {% endif %}
+     
+           
+              
+              
+    
+    </div>  
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 70 1440 220"><path fill="#0099ff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,154.7C672,160,768,192,864,202.7C960,213,1056,203,1152,170.7C1248,139,1344,85,1392,58.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg> 
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.setTimeout(function() {
+          document.getElementById('myAlert').classList.remove('show');
+        }, 5000);
+      </script>
+</body>
+
+</html>
