@@ -1,0 +1,183 @@
+{% extends 'admin/master.html' %}     
+{% load static %} 
+{% load poll_extras %}
+{% if user.is_authenticated %}
+{% block master %}
+{% if messages %}
+<div class="position-fixed w-100 top-0   my-2" id="alert_message" style="z-index:2;">
+  {% for message in messages %}    <div class="alert alert-{{message.extra_tags}} fade show" role="alert" id="myAlert">
+      
+        <strong>{{ message }} </strong>
+       
+    </div> {% endfor %}
+</div>
+{% endif %}
+
+<div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+        <div class="container-fluid">
+          
+            <h3 class="text-dark"><strong><span style="color: #303c54;">Student Attendance Database</span></strong></h3>
+            <div class="d-flex justify-content-end align-items-center mx-2">
+              <button class="btn btn-primary" type="button"  data-bs-toggle="modal" data-bs-target="#myModal1">
+                <i class="fa fa-plus"></i></button></div>
+            <div id="student_attendance_database">
+  
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+     <form  method="post">
+                {% csrf_token %}
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="form-group ">
+                <label for="attendence_roll" class="col-form-label ">Roll : </label>
+                <input type="text" class="form-control" id="attendance_roll" name="attendance_roll">
+              </div>
+
+                <div class="form-group ">
+                    <label for="attendence_date" class="col-form-label">Date : </label>
+                    <input type="date" class="form-control" id="attendance_date" name="attendance_date">
+                  </div>
+                  <div class="form-group">
+                    <label for="attendence_status" class="col-form-label">Status : </label>
+                    <input type="text" class="form-control" id="attendence_status" name="attendance_status">
+                  </div>
+     
+        </div>
+  
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger" name="delete_attendance" data-bs-dismiss="modal" >Delete</button>
+          <button type="submit" class="btn btn-primary" name="update_attendance" data-bs-dismiss="modal" >Save changes</button>
+        </div>
+   </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="modal" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Add Attendance</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+     <form  method="post">
+                {% csrf_token %}
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="form-group ">
+                <label for="attendence_roll" class="col-form-label ">Roll : </label>
+                <input type="text" class="form-control" id="attendance_roll1" name="attendance_roll1">
+              </div>
+
+                <div class="form-group ">
+                    <label for="attendence_date" class="col-form-label">Date : </label>
+                    <input type="date" class="form-control" id="attendance_date1" name="attendance_date1">
+                  </div>
+                  <div class="form-group">
+                    <label for="attendence_status" class="col-form-label">Status : </label>
+                    <input type="text" class="form-control" id="attendence_status1" name="attendance_status1">
+                  </div>
+     
+        </div>
+  
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" name="add_attendance" data-bs-dismiss="modal" >Add Attendance</button>
+        </div>
+   </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class="card shadow mt-3 mb-5">
+                    <div class="card-body">
+                        <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0 table-hover" id="dataTable4">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width: 150px;">Name</th>
+                                        <th style="min-width: 150px;">Register Number</th>
+                                        <th style="min-width: 100px;">Date</th>
+                                        <th style="min-width: 200px;">Study</th>
+                                        <th style="min-width: 100px;">Time</th>
+                                        <th style="min-width: 100px;">Attendance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                           
+                                    {% for attendance in attendances %}
+                                    <tr class="clickable-row"  data-bs-toggle="modal" data-bs-target="#myModal" style="cursor: pointer;">
+                                        {% studentdata attendance.user as data %}
+                                        <td>{{data.name}}</td>
+                                        <td>{{data.roll}}</td>
+                                        <td>{% print_date attendance.date %}</td>
+                                        <td> {{data.degree}}-{{data.branch}}-{{data.batch}}</td>
+                                        <td>
+                                          {% if attendance.datetime %}
+                                          {% print_datetime attendance.datetime %}  {% else %}
+                                          custom added{% endif %}
+                                      </td>
+                                        <td>{{ attendance.status }}</td>
+                                    </tr>
+                                    {% endfor %}
+                      
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>Register Number</td>
+                                        <td><strong>Date</strong></td>
+                                        <td>Study</td>
+                                        <td>Time</td>
+                                        <td>Attendence</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="{% static 'js/attendance.js' %}"></script>
+<script src="{% static 'js/datatable.js' %}"></script>
+<script src="{% static 'js/bootdatatable.js' %}"></script>
+
+{% endblock master %}
+{% endif %}

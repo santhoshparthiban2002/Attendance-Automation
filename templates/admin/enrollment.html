@@ -1,0 +1,193 @@
+{% extends 'admin/master.html' %}     
+{% load static %} 
+{% load poll_extras %}
+{% block master %}
+
+
+
+<div id="wrapper">
+    <div class="container-fluid">
+        <h3 class="text-dark"><strong><span style="color: #303c54;">Course&nbsp; Enrollments</span></strong></h3>
+      
+        <div class="card shadow">
+            <div class="row" style="min-height: 50px;background: rgb(248,249,252);margin: 0px;">
+                <div class="col d-flex justify-content-center align-items-center bgcolor" id="enrollmentclick" style="cursor: pointer;width: 100%;">
+                    <p class=" m-0 fw-bold text-white" id="enrollmentclickp">Course Enrollment</p>
+                </div>
+                <div class="col d-flex justify-content-center align-items-center" id="promotionclick" style="cursor: pointer;width: 100%;">
+                    <p class=" m-0 fw-bold" id="promotionclickp">Grade Promotion</p>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow" id="course_enrollment" style="margin-top: 20px;">
+            <div class="card-header py-3">
+                <p class="fw-bold text-primary m-0">Course Enrollment</p>
+            </div>
+            <div class="card-body" style="width: 100%;">                    <form method="post"  >
+                        {% csrf_token %}
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+
+                           <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Batch</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="ebatch" type="text" class="form-control"></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Degree</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="edegree" type="text" class="form-control"></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Branch</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="ebranch" type="text" class="form-control"></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Year</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="eyear" type="text" class="form-control"></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Semester</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="esemester" type="text" class="form-control"></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Course</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><select name="ecourse" class="form-select">
+                        {% for course in courses %}
+                        <option value="{{course.name}}">{{course.name}}</option>
+                        {% endfor %}
+                    </select></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 d-flex justify-content-end align-items-end">
+                    <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center align-items-md-center justify-content-lg-end justify-content-xl-end align-items-xl-center" style="margin-top: 10px;margin-bottom: 10px;">
+                        <button class="btn btn-primary" name="enrollment" type="submit" style="margin-right: 10px;">Enroll</button></div>
+                </div>
+            
+            </div></form>
+        </div>
+        <div class="card shadow" id="enrollment_overview" style="margin-top: 20px;">
+            <div class="card-header py-3" style="background: rgb(248, 249, 252);">
+                <p class="text-primary m-0 fw-bold">Enrollment Overview</p>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive table mt-2" id="dataTable-2" role="grid" aria-describedby="dataTable_info">
+                    <table class="table my-0 table-hover" id="dataTable2">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 150px;">Name</th>
+                                <th style="min-width: 100px;">Register Number</th>
+                                <th style="min-width: 100px;">Batch</th>
+                                <th style="min-width: 300px;">Degree Program</th>
+                                <th style="min-width: 200px;">Latest Enrolled</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr class="clickable-row" data-href="https://github.com/chatify-SMIT/ComputeX-WordMate/blob/master/word-mate/static/script.js" style="cursor: pointer;">
+                              <td>{{ student.name }}</td>
+                              <td>{{ student.roll }}</td>
+                              <td>{{ student.batch }}</td>
+                              <td>{{ student.degree }} - {{ student.branch }} - {{ student.year }} year - {{ student.semester }} semester</td>
+                              <td>  
+                                {% for enrollment in student.enrollment_set.all %}
+                                {{ enrollment.courses.last}}
+                                {% if not forloop.last %}<br>{% endif %}
+                            {% endfor %}
+                              </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Name</td>
+                                <td>Register Number</td>
+                                <td>Batch</td>
+                                <td>Degree Program</td>
+                                <td>Latest Enrolled</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow d-none" id="grade_promotion" style="margin-top: 20px;">
+            <div class="card-header py-3">
+                <p class="fw-bold text-primary m-0">Grade Promotion</p>
+            </div>
+            <div class="card-body" style="width: 100%;">
+                <form method="post"  >
+                    {% csrf_token %}
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Batch</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input id="pbatch" name="pbatch" type="text" class="form-control"></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Degree</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input id="pdegree" name="pdegree" type="text" class="form-control"></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Branch</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input id="pbranch" name="pbranch" type="text" class="form-control"></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Year</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input id="pyear" name="pyear" type="text" class="form-control"></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Semester</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input id="psemester" name="psemester" type="text" class="form-control"></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Action</strong></div>
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><select name="paction" class="form-select">
+                            <option value="psemester" selected="">Promote Semester</option>
+                            <option value="pyear">Promote Year</option>
+                            <option value="dsemester">Depromote Semester</option>
+                            <option value="dyear">Depromote Year</option>
+                        </select></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 d-flex justify-content-end align-items-end">
+                    <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center align-items-md-center justify-content-lg-end justify-content-xl-end align-items-xl-center" style="margin-top: 10px;margin-bottom: 10px;">
+                        <button class="btn btn-primary" name="promotion" type="submit" style="margin-right: 10px;">Submit</button></div>
+                </div>
+            </form>
+            </div>
+        </div>
+        <div class="card shadow d-none" id="promotion_overview" style="margin-top: 20px;">
+            <div class="card-header py-3" style="background: rgb(248, 249, 252);">
+                <p class="text-primary m-0 fw-bold">Promotion Overview</p>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
+                    <table class="table my-0 table-hover" id="dataTable2">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 150px;">Name</th>
+                                <th style="min-width: 100px;">Register Number</th>
+                                <th style="min-width: 100px;">Batch</th>
+                                <th style="min-width: 300px;">Degree Program</th>
+                                <th style="min-width: 50px;">Year</th>
+                                <th style="min-width: 50px;">Semester</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr class="clickable-row" data-href="https://github.com/chatify-SMIT/ComputeX-WordMate/blob/master/word-mate/static/script.js" style="cursor: pointer;">
+                              <td>{{ student.name }}</td>
+                              <td>{{ student.roll }}</td>
+                              <td>{{ student.batch }}</td>
+                              <td>{{ student.degree }}-{{ student.branch }}</td>
+                              <td>{{ student.year }}</td>
+                              <td>{{ student.semester }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Name</td>
+                                <td>Register Number</td>
+                                <td>Batch</td>
+                                <td>Degree Program</td>
+                                <td>Year</td>
+                                <td>Semester</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="{% static 'js/datatable.js' %}"></script>
+<script src="{% static 'js/bootdatatable.js' %}"></script>
+<script src="{% static 'js/enrollment.js' %}"></script>
+{% endblock master %}
