@@ -1,0 +1,79 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+</head>
+
+<body style="border-color: var(--bs-card-bg);background: rgb(33,37,41);">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3" style="position: relative;display: block;">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#">
+                <div><img src="{% static 'images/logo.png' %}" width="44" height="44"></div>
+            </a><span style="color: rgb(255,255,255);">ATTENDANCE PORTAL</span><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-5">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'student' profile.roll %}"><span style="color: var(--bs-nav-link-hover-color);">Student</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'attendance_student' profile.roll %}">Attendance</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'leave_student' profile.roll %}">Leave letter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% if user.is_authenticated %}
+    <div class="container" style="padding-bottom: 20px;">
+        <div class="card" id="info">
+            <div class="card-header">
+                <h5 class="mb-0">Hello {{profile.name}}</h5>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row" style="margin-bottom: 20px;margin-top: 20px;">
+                        <div class="col-md-3 d-flex justify-content-center align-items-center" style="width: 100%;">
+                            <img src="{{profile.photo.url}}" class="d-md-flex justify-content-md-center align-items-md-center" style="width: 170px;height: 185px;"></div>
+                    </div>
+                    <div class="row" style="margin-top: 40px;margin-bottom: 20px;">
+                        <div class="col-md-3"><strong class="fs-5">Email</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.email}}</span></div>
+                        <div class="col-md-3"><strong class="text-capitalize fs-5">Roll</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.roll}}</span></div>
+                    </div>
+                    <div class="row" style="margin-top: 25px;margin-bottom: 25px;">
+                        <div class="col-md-3"><strong class="fs-5">Degree</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.degree}}</span></div>
+                        <div class="col-md-3"><strong class="text-capitalize fs-5">Branch</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.branch}}</span></div>
+                    </div>
+                    <div class="row" style="margin-top: 25px;margin-bottom: 25px;">
+                        <div class="col-md-3"><strong class="fs-5">Dob</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.dob}}</span></div>
+                        <div class="col-md-3"><strong class="text-capitalize fs-5">Batch</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.batch}}</span></div>
+                    </div>
+                    <div class="row" style="margin-top: 25px;margin-bottom: 25px;">
+                        <div class="col-md-3"><strong class="fs-5">Year</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.year}}</span></div>
+                        <div class="col-md-3"><strong class="text-capitalize fs-5">Semester</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.semester}}</span></div>
+                    </div>
+                    <div class="row" style="margin-top: 25px;margin-bottom: 25px;">
+                        <div class="col-md-3"><strong class="fs-5">Mobile</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.mobile}}</span></div>
+                        <div class="col-md-3"><strong class="text-capitalize fs-5">Parent mobile</strong></div>
+                        <div class="col-md-3"><span class="fs-5">{{profile.parent_mobile}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %} 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+   
+</body>
+
+</html>

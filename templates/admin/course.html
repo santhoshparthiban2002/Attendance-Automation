@@ -1,0 +1,288 @@
+{% extends 'admin/master.html' %}     
+{% load static %} 
+{% load poll_extras %}
+{% block master %}
+{% if messages %}
+<div class="position-fixed w-100 top-0  my-2" id="alert_message" style="z-index:2;">
+  {% for message in messages %}    <div class="alert alert-{{message.extra_tags}} fade show" role="alert" id="myAlert">
+      
+        <strong>{{ message }} </strong>
+       
+    </div> {% endfor %} 
+</div>
+{% endif %}
+
+
+
+
+<div class="modal" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+     <form  method="post">
+                {% csrf_token %}
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="form-group d-none ">
+                <label for="name" class="col-form-label ">Name : </label>
+                <input type="text" class="form-control" id="name" name="name">
+              </div>
+
+            <div class="form-group ">
+                <label for="coursestart" class="col-form-label ">Course Start : </label>
+                <input type="date" class="form-control" id="coursestart" name="coursestart">
+              </div>
+
+                <div class="form-group ">
+                    <label for="courseend" class="col-form-label">Course End : </label>
+                    <input type="date" class="form-control" id="courseend" name="courseend">
+                  </div>
+         
+     
+        </div>
+  
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-danger" name="delete_course" data-bs-dismiss="modal" >Delete</button>
+            <button type="submit" class="btn btn-primary" name="update_course" data-bs-dismiss="modal" >Save changes</button>
+        </div>
+   </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal" id="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+     <form  method="post">
+                {% csrf_token %}
+        <!-- Modal body -->
+        <div class="modal-body">
+                  <div class="form-group d-none ">
+                    <label for="hdyear" class="col-form-label ">Year : </label>
+                    <input type="text" class="form-control" id="hdyear" name="hdyear">
+                  </div>
+    
+                <div class="form-group  d-none ">
+                    <label for="hddate" class="col-form-label ">Date : </label>
+                    <input type="date" class="form-control" id="hddate" name="hddate">
+                  </div>
+    
+                    <div class="form-group  ">
+                        <label for="hdreason" class="col-form-label">Reason : </label>
+                        <input type="text" class="form-control" id="hdreason" name="hdreason">
+                      </div>
+     
+        </div>
+  
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-danger" name="delete_holiday" data-bs-dismiss="modal" >Delete</button>
+            <button type="submit" class="btn btn-primary" name="update_holiday" data-bs-dismiss="modal" >Save changes</button>
+        </div>
+   </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="wrapper">
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div class="container-fluid">
+                <h3 class="text-dark"><strong><span style="color: #303c54;">Course &amp; Holiday</span></strong></h3>
+            
+                <div class="card shadow">
+                    <div class="row" style="min-height: 50px;background: rgb(248,249,252);margin: 0px;">
+                        <div class="col d-flex justify-content-center align-items-center bgcolor" id="courseclick" style="cursor: pointer;width: 100%;">
+                            <p class="m-0 fw-bold text-white" id="courseclickp">Course Registration</p>
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center" id="holidayclick" style="cursor: pointer;width: 100%;">
+                            <p class=" m-0 fw-bold" id="holidayclickp">Holiday Declaration</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow" id="course_registration" style="margin-top: 20px;">
+                    <div class="card-header py-3">
+                        <p class="fw-bold text-primary m-0">Course Registration</p>
+                    </div>
+                    <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                    <div class="card-body" style="width: 100%;">
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Batch</strong></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="batch" type="text" class="form-control"></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Degree</strong></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="degree" type="text" class="form-control"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Year</strong></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="year" type="text" class="form-control"></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Semester</strong></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="semester" type="text" class="form-control"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Start Date</strong></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="start" type="date" class="form-control"></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>End Date</strong></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="end" type="date" class="form-control"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 d-flex justify-content-end align-items-end">
+                            <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center align-items-md-center justify-content-lg-end justify-content-xl-end align-items-xl-center" style="margin-top: 10px;margin-bottom: 10px;">
+                                <button class="btn btn-primary" type="submit" name="course" style="margin-right: 10px;">Submit</button></div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                <div class="card shadow d-none" id="holiday_declaration" style="margin-top: 20px;">
+                    <div class="card-header py-3">
+                        <p class="fw-bold text-primary m-0">Holiday Declaration</p>
+                    </div>
+                    <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                    <div class="card-body" style="width: 100%;">
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>year</strong></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="hyear" type="text" class="form-control"></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Date</strong></div>
+                            <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="date" type="date" class="form-control"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-start align-items-center">
+                            <div class="col-xl-3" style="margin-top: 10px;margin-bottom: 10px;"><strong>Reason</strong></div>
+                            <div class="col-xl-8 col-xxl-9" style="margin-top: 10px;margin-bottom: 10px;"><input name="reason" type="text" class="form-control"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 d-flex justify-content-end align-items-end">
+                            <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center align-items-md-center justify-content-lg-end justify-content-xl-end align-items-xl-center" style="margin-top: 10px;margin-bottom: 10px;">
+                                <button class="btn btn-primary" type="submit" name="holiday" style="margin-right: 10px;">Submit</button></div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                <div class="card shadow  mb-4" id="course_overview" style="margin-top: 20px;">
+                    <div class="card-header py-3" style="background: rgb(248, 249, 252);">
+                        <p class="text-primary m-0 fw-bold">Course Overview</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive table mt-2" id="dataTable-2" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0  table-hover" id="dataTable1">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width: 100px;">Course Id</th>
+                                        <th style="min-width: 150px;">Batch</th>
+                                        <th style="min-width: 100px;">Degree</th>
+                                        <th style="min-width: 100px;">Year</th>
+                                        <th style="min-width: 100px;">Semester</th>
+                                        <th style="min-width: 100px;">Start</th>
+                                        <th style="min-width: 100px;">End</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                          
+                                        {% for course in courses %}
+                                        <tr class="coursedatas" data-bs-toggle="modal" data-bs-target="#myModal1" style="cursor: pointer;">
+                                            <td>{{ course.name }}</td>
+                                            <td>{{ course.batch }}</td>
+                                          <td>{{ course.degree }}</td>
+                                          <td>{{ course.year }}</td>
+                                          <td>{{ course.semester }}</td>
+                                          <td>{% print_date course.start %}</td>
+                                          <td>{% print_date course.end %}</td>
+                                        </tr>
+                                        {% endfor %}
+                               
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th style="min-width: 100px;">Course Id</th>
+                                        <td style="min-width: 150px;">Batch</td>
+                                        <td style="min-width: 100px;">Degree</td>
+                                        <td style="min-width: 100px;">Year</td>
+                                        <td style="min-width: 100px;">Semester</td>
+                                        <td style="min-width: 100px;">Start</td>
+                                        <td style="min-width: 100px;">End</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow d-none  mb-4" id="holiday_overview" style="margin-top: 20px;">
+                    <div class="card-header py-3" style="background: rgb(248, 249, 252);">
+                        <p class="text-primary m-0 fw-bold">Holiday Overview</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive table  mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0  table-hover" id="dataTable2">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width: 50px;">Batch</th>
+                                        <th style="min-width: 100px;">Date</th>
+                                        <th style="min-width: 300px;">Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for leave in leaves %}
+                                    <tr class="holidaydata"  data-bs-toggle="modal" data-bs-target="#myModal2" style="cursor: pointer;">
+                                      <td>{{ leave.batch }}</td>
+                                      <td>{% print_date leave.date %}</td>
+                                      <td>{{ leave.reason }}</td>
+                               
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="min-width: 50px;">Batch</td>
+                                        <td style="min-width: 100px;">Degree</td>
+                                        <td style="min-width: 300px;">Year</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="{% static 'js/datatable.js' %}"></script>
+<script src="{% static 'js/bootdatatable.js' %}"></script>
+<script src="{% static 'js/course.js' %}"></script>
+
+{% endblock master %}
