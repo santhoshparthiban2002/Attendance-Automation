@@ -1,0 +1,131 @@
+{% extends 'admin/master.html' %}     
+{% load static %} 
+{% load poll_extras %}
+{% block master %}
+
+{% if messages %}
+<div class="position-fixed w-100 top-0  my-2" id="alert_message" style="z-index:2;">
+  {% for message in messages %}    <div class="alert alert-{{message.extra_tags}} fade show" role="alert" id="myAlert">
+      
+        <strong>{{ message }} </strong>
+       
+    </div> {% endfor %} 
+</div>
+{% endif %}
+
+
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+<div class="container-fluid">
+    <h3 class="text-dark"><strong><span style="color: #303c54;">Profile {{teacher_profile.roll}}</span></strong></h3>
+    <div class="row mb-3">
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-body text-center shadow">
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 mb-3">
+                        <form method="post"  enctype="multipart/form-data" >
+                            {% csrf_token %}
+                        <div class="col">
+                            <label class="form-label" for="roll"><strong>Username</strong></label>
+                            <div class="d-flex ">
+                             <input class="form-control  formon" type="roll" id="roll" value="{{teacher_profile.roll}}" name="roll" disabled>
+                             
+                            </div>
+                            </div>
+                        </div>     
+                   
+
+                        <div class="avatar-upload">
+                            <div class="avatar-edit">
+                                <input name="studentimage" type="file"  id="studentimage" accept=".png, .jpg, .jpeg" >
+                                 <label class="form-label formbutton d-flex d-none justify-content-center align-items-center" for="studentimage">
+                                <i class="fas fa-pen"></i></label>
+                            </div>
+                            <div class="avatar-preview">
+                                <div id="studentimagepreview" style="background-image: url({{teacher_profile.photo.url}});"></div>
+                            </div>
+                        </div><button name="change_username"  class="btn btn-primary mx-3 formon  btn-sm" type="submit" disabled>Update</button>
+              </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-8">
+ 
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow mb-3">
+                        <div class="card-header py-3">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-primary m-0 fw-bold">Student Settings</p>
+                                </div>
+                                <div class="col d-flex justify-content-center justify-content-sm-end justify-content-md-end">
+                                    <button id="disable_form" class="btn btn-danger btn-sm fs-6 fw-bold " type="button">Update Disabled</button>
+                                    <button id="enable_form" class="btn btn-success btn-sm fs-6 d-none fw-bold link-light" type="button">Update Enabled</button></div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                                  <form method="post"  enctype="multipart/form-data" >
+                                        {% csrf_token %}
+                                       
+                                        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 mb-3">
+                                            <div class="col"><label class="form-label" for="name"><strong>Name</strong></label>
+                                                <input class="form-control formon" type="name" id="name" value="{{teacher_profile.name}}" name="name" disabled></div>
+                                        </div>                      
+                                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2">
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label" for="department"><strong>Department</strong></label>
+                                            <input class="form-control formon" type="text" id="department" value="{{teacher_profile.department}}" name="department" disabled></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label" for="coordinate"><strong>Coordinate</strong></label>
+                                            <input class="form-control formon" type="text" id="coordinate" value="{{teacher_profile.coordinate}}" name="coordinate" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2">
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label" for="dob"><strong>Dob</strong></label>
+                                            <input class="form-control formon" type="date" name="dob" value="{{ teacher_profile.dob|date:'Y-m-d' }}" disabled></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label" for="designation"><strong>Designation</strong></label>
+                                            <input class="form-control formon" type="text" id="designation" value="{{teacher_profile.designation}}" name="designation" disabled></div>
+                                    </div>
+                                </div>
+                                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2">
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label" for="email"><strong>Email</strong></label>
+                                            <input class="form-control formon" type="email" id="email" value="{{teacher_profile.email}}"  name="email" disabled></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label" for="mobile"><strong>Mobile</strong></label>
+                                            <input class="form-control formon" type="text" id="mobile" value="{{teacher_profile.mobile}}"  name="mobile" disabled></div>
+                                    </div>
+                                </div>
+                           
+                          
+                                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2">
+                                    <div class="col">
+                   
+                                        <button name="reset_password"  class="btn btn-primary btn-sm" type="submit">Reset Password</button></div>
+                                    <div class="col d-flex justify-content-end formbutton d-none align-items-center">
+                                        <button name="update_record" class="btn btn-primary btn-sm" type="submit">Save Details</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <form method="post" class="d-flex justify-content-end align-items-center" >
+                        {% csrf_token %}
+                    <button class="btn btn-danger" name="delete_user" type="submit">Delete User</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+
+   
+
+
+
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock master %}

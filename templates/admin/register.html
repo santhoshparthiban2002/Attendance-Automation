@@ -1,0 +1,156 @@
+{% extends 'admin/master.html' %}     
+{% load static %} 
+
+{% block master %}  {% if messages %}
+<div class="position-fixed w-100 top-0" id="alert_message" style="z-index:2;">
+  {% for message in messages %}    <div class="alert alert-{{message.extra_tags}} fade show" role="alert" id="myAlert">
+      
+        <strong>{{ message }} </strong>
+       
+    </div> {% endfor %}
+</div>
+{% endif %}
+
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+<div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+     
+
+
+        <div class="container-fluid">
+            <h3 class="text-dark"><strong><span style="color: #303c54;">Registration</span></strong></h3>
+            <div class="card shadow">
+                <div class="row" style="min-height: 50px;background: rgb(248,249,252);margin: 0px;">
+                    <div class="col d-flex justify-content-center align-items-center bgcolor" id="studentclickr" style="cursor: pointer;width: 100%;">
+                        <p class=" m-0 fw-bold text-white" id="studentclickrp">Student Registration</p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center" id="teacherclickr" style="cursor: pointer;width: 100%;">
+                        <p class=" m-0 fw-bold" id="teacherclickrp">Teacher Registration</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow mb-5" id="student_register" style="margin-top: 20px;">
+                <div class="card-header py-3">
+                    <p class="fw-bold text-primary m-0">Student Registration</p>
+                </div>
+                <div class="card-body" style="width: 100%;">
+                    <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col d-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="margin-top: 10px;margin-bottom: 10px;">
+                            <div class="avatar-upload">
+                                <div class="avatar-edit">
+                                    <input name="studentimage" type="file" id="studentimage" accept=".png, .jpg, .jpeg" required>
+                                     <label class="form-label d-flex justify-content-center align-items-center" for="studentimage">
+                                    <i class="fas fa-pen"></i></label>
+                                </div>
+                                <div class="avatar-preview">
+                                    <div id="studentimagepreview" style="background-image: url({% static 'images/student_profile.png'  %});"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Name</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="name" type="text" class="form-control" required></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Roll No</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="roll" type="text" class="form-control" required></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Degree</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="degree" type="text" class="form-control" required></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Branch</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="branch" type="text" class="form-control" required></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Dob</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="dob" type="date" class="form-control" required></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Batch</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="batch" type="text" class="form-control" required></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Year</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="year" type="text" class="form-control" required></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Semester</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="semester" type="text" class="form-control" required></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Mobile</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="mobile" type="text" class="form-control" required></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Parent</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="parent" type="text" class="form-control" required></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
+                            <strong>Email</strong>
+                        </div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
+                            <input name="email" type="email" class="form-control" required>
+                        </div>
+                        <div class="col"></div>
+                        <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center align-items-md-center justify-content-lg-end justify-content-xl-end align-items-xl-center" style="margin-top: 10px;margin-bottom: 10px;">
+                            <button class="btn btn-primary" name="studentregister" type="submit" style="margin-right: 10px;">Submit</button>
+                        </div>
+                       
+                    </div> </form>
+                </div>
+            </div>
+            <div class="card shadow mb-5 d-none" id="teacher_register" style="margin-top: 20px;">
+                <div class="card-header py-3">
+                    <p class="fw-bold text-primary m-0">Staff Registration</p>
+                </div>
+                <div class="card-body" style="width: 100%;">
+                    <form method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col d-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="margin-top: 10px;margin-bottom: 10px;">
+                            <div class="avatar-upload">
+                                <div class="avatar-edit"><input type="file" name="teacherimage" id="teacherimage" accept=".png, .jpg, .jpeg">
+                                    <label class="form-label d-flex justify-content-center align-items-center" for="teacherimage">
+                                        <i class="fas fa-pen"></i></label></div>
+                                <div class="avatar-preview">
+                                    <div id="teacherimagepreview" style="background-image: url({% static 'images/teacher_profile.png'  %});"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Name</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="tname" type="text" class="form-control" required></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Roll No</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="troll" type="text" class="form-control" required></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Dob</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="tdob" type="date" class="form-control" required></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Class Incharge</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="tcoordinator" type="text" class="form-control" required></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Department</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="tdept" type="text" class="form-control" required></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Designation</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="tdesig" type="text" class="form-control" required></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 row-cols-xxl-4 justify-content-center align-items-center">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Mobile</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="tmobile" type="text" class="form-control" required></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><strong>Email</strong></div>
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;"><input name="temail" type="email" class="form-control" required></div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 row-cols-xl-1 row-cols-xxl-1 justify-content-center align-items-center">
+                        <div class="col d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center justify-content-sm-center justify-content-md-center align-items-md-center justify-content-lg-end justify-content-xl-end align-items-xl-center" style="margin-top: 10px;margin-bottom: 10px;">
+                            <button class="btn btn-primary" type="submit" name="teacherregister" style="margin-right: 10px;">Submit</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  
+</script>
+<script src="{% static 'js/register.js' %}"></script>
+{% endblock master %}
